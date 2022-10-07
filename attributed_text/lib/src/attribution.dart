@@ -33,6 +33,5 @@ class Attribution {
   factory Attribution.fromJson(Map<String, dynamic> json) =>
       _$AttributionFromJson(json);
 
-  /// Connect the generated [_$PersonToJson] function to the `toJson` method.
   Map<String, dynamic> toJson() => _$AttributionToJson(this);
 }
