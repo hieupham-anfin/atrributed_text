@@ -1,11 +1,14 @@
 import 'dart:math';
 
+import 'package:json_annotation/json_annotation.dart';
 import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
 
 import 'attribution.dart';
 import 'logging.dart';
 import 'span_range.dart';
+
+part 'attributed_spans.g.dart';
 
 final _log = attributionsLog;
 
@@ -984,6 +987,7 @@ class AttributedSpans {
 ///
 /// The given [AttributionType] must implement equality for
 /// span management to work correctly.
+@JsonSerializable()
 class SpanMarker implements Comparable<SpanMarker> {
   /// Constructs a [SpanMarker] with the given [attribution], [offset] within
   /// some discrete content, and [markerType] of [start] or [end].
@@ -1049,6 +1053,12 @@ class SpanMarker implements Comparable<SpanMarker> {
 
   @override
   int get hashCode => attribution.hashCode ^ offset.hashCode ^ markerType.hashCode;
+
+  factory SpanMarker.fromJson(Map<String, dynamic> json) =>
+      _$SpanMarkerFromJson(json);
+
+  /// Connect the generated [_$PersonToJson] function to the `toJson` method.
+  Map<String, dynamic> toJson() => _$SpanMarkerToJson(this);
 }
 
 /// The type of a marker within a span, either [start] or [end].
